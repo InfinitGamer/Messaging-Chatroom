@@ -1,5 +1,5 @@
 # Messaging-Chatroom
-Messaging chatroom that will be using sockets and threading 
+Messaging chatroom that will be using sockets and threading.
 This project is in python3 and i used this website as a tutorial guide:
 https://pythonprogramming.net/server-chatroom-sockets-tutorial-python-3/
 For that reason I say thank you to the creator of the website post.
