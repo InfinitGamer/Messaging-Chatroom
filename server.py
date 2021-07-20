@@ -19,7 +19,7 @@ server_socket.listen()
 
 #creamos la lista de sockets que se conectaran
 socket_list = [server_socket]
-#creamos un diccionario de clientes, por cada socket, nos guardaremos su socket
+#creamos un diccionario de clientes, por cada socket, nos guardaremos su username
 clients = {}
 
 #definimos la funcion que dado un socket nos dirá si hay algun mensaje que ha enviado
@@ -56,10 +56,7 @@ while True:
             clients_socket, client_address = server_socket.accept()
             #el usuario la primera palabra que diga debe de ser el su username
             user = recive_message(clients_socket)
-            #si el tio se va del chatroom simplemente seguimos hacia adelante
-
-            if user is False:
-                continue
+        
             #metemos el socket del cliente y asociamos a cada client_socket pues su username
             socket_list.append(clients_socket)
             clients[clients_socket] = user
