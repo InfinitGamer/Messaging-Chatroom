@@ -3,28 +3,16 @@ import socket
 import select
 import errno
 import sys
+
 HEADERLENGTH = 10
 IP = "127.0.0.1"
 PORT = 1234
-#pedimos el username
-my_username = input("Username: ")
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-client_socket.connect((IP,PORT))
-
-#vamos hacer que el metodo de recivir no bloque
-client_socket.setblocking(False)
-
-username_encoded = my_username.encode()
-
-usernameheader = f"{len(my_username):< {HEADERLENGTH}}".encode()
-client_socket.send(usernameheader + username_encoded)
-
-def enviar(socket):
+def enviar(socket, username):
     while True:
         #escribimos el mensaje que queremos escribir
-        message = input (f"{my_username}: ")
+        message = input (f"{username}: ")
         
         #si existe mensaje
         if message:
@@ -67,8 +55,27 @@ def recibir (socket):
             print('Reading error: '.format(str(e)))
             sys.exit()
 
+def main():
+    #pedimos el username
+    my_username = input("Username: ")
 
-x = threading.Thread(target= enviar, args=(client_socket,), daemon= True)
-y = threading.Thread(target= recibir, args=(client_socket,), daemon= True)
-x.start()
-y.start()
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    client_socket.connect((IP,PORT))
+
+    #vamos hacer que el metodo de recivir no bloque
+    client_socket.setblocking(False)
+
+    username_encoded = my_username.encode()
+
+    usernameheader = f"{len(my_username):< {HEADERLENGTH}}".encode()
+    client_socket.send(usernameheader + username_encoded)
+    x = threading.Thread(target= enviar, args=(client_socket,my_username,))
+    y = threading.Thread(target= recibir, args=(client_socket,))
+    x.start()
+    y.start()
+
+
+
+if __name__ == '__main__':
+    main()
