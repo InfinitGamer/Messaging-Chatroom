@@ -28,18 +28,17 @@ def enviar(socket, username):
 def recibir (socket):
    while True:
         try:
-            while True:
-                username_header = socket.recv(HEADERLENGTH)
-                if len(username_header) == 0:
-                    print("connection closed by the server")
-                    sys.exit()
-                username_length = int(username_header.decode().strip())
-                username = socket.recv(username_length).decode()
-                message_header = socket.recv(HEADERLENGTH)
-                message_length = int(message_header.decode().strip())
-                message = socket.recv(message_length).decode()
-                print(f"{username}: {message}")
-        
+            username_header = socket.recv(HEADERLENGTH)
+            if len(username_header) == 0:
+                print("connection closed by the server")
+                sys.exit()
+            username_length = int(username_header.decode().strip())
+            username = socket.recv(username_length).decode()
+            message_header = socket.recv(HEADERLENGTH)
+            message_length = int(message_header.decode().strip())
+            message = socket.recv(message_length).decode()
+            print(f"{username}: {message}")
+
         except IOError as e:
             # This is normal on non blocking connections - when there are no incoming data error is going to be raised
             # Some operating systems will indicate that using AGAIN, and some using WOULDBLOCK error code
