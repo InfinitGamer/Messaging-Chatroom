@@ -22,9 +22,11 @@ def enviar(socket, username):
 
 
 
-
+#existe el doble while true porque asi conseguimos que si no se recibe ningun mensaje 
+#entrará en el except y hará un continue y después volverá al try para
+#seguir recibiendo mensajes
 def recibir (socket):
-    while True:
+   while True:
         try:
             while True:
                 username_header = socket.recv(HEADERLENGTH)
@@ -47,7 +49,7 @@ def recibir (socket):
                 print('Reading error: {}'.format(str(e)))
                 sys.exit()
 
-            # We just did not receive anything
+            # We just did not receive anything (importante, esto hace que sigamos recibiendo mensajes)
             continue
 
         except Exception as e:
@@ -63,7 +65,7 @@ def main():
 
     client_socket.connect((IP,PORT))
 
-    #vamos hacer que el metodo de recivir no bloque
+    #vamos hacer que el metodo de recibir no bloque
     client_socket.setblocking(False)
 
     username_encoded = my_username.encode()
