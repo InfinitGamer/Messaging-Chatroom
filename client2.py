@@ -22,7 +22,7 @@ def enviar(socket, username):
 
 
 
-#existe el doble while true porque asi conseguimos que si no se recibe ningun mensaje 
+#existe el while true porque asi conseguimos que si no se recibe ningun mensaje 
 #entrará en el except y hará un continue y después volverá al try para
 #seguir recibiendo mensajes
 def recibir (socket):
